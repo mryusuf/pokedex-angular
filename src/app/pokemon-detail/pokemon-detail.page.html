@@ -41,10 +41,10 @@
               <ion-col>
 
                 <!-- Favorite -->
-                <ion-button fill="false" slot ="end">
+                <ion-button fill="false" (click)="toggleFavorite()">
                   <ion-icon 
                     aria-hidden="true" 
-                    [name]="isFavorite == true ? 'heart' : 'heart-outline'"
+                    [name]="isFavorite ? 'heart' : 'heart-outline'"
                     color="danger"
                   >
                   </ion-icon>

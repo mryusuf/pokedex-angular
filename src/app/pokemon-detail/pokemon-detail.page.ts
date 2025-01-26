@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { PokemonDetail } from '../models/pokemon';
 import { LocalPokemon } from '../models/local-pokemon';
 import { StorageService } from '../services/storage.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -20,7 +21,8 @@ export class PokemonDetailPage implements OnInit {
   constructor(
     private service: APIService, 
     private router: Router, 
-    private storageService: StorageService
+    private storageService: StorageService,
+    private navController: NavController
   ) {
     let state = this.router.getCurrentNavigation()?.extras?.state;
     this.pokedexIndex = state ? state['pokedexIndex'] : 1;
@@ -28,6 +30,7 @@ export class PokemonDetailPage implements OnInit {
 
   async ngOnInit() {
     this.fetchPokemonDetail();
+    await this.storageService.init();
     await this.checkIfExistOnLocal();
   }
 

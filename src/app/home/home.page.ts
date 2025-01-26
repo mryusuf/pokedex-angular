@@ -11,6 +11,7 @@ import { InfiniteScrollCustomEvent, NavController } from '@ionic/angular';
   standalone: false,
 })
 export class HomePage implements OnInit {
+  isLoading = true;
   offset = 0;
   pokemons: Pokemon[] = [];
 
@@ -24,13 +25,13 @@ export class HomePage implements OnInit {
     this.service.getPokemonList(limit, this.offset).subscribe({
       next: (data) => {
         this.pokemons = this.pokemons.concat(data.results);
-        console.log(this.pokemons);
       },
       error: (error) => {
         console.log(error);
       },
       complete: () => {
         this.offset += 20;
+        this.isLoading = false;
       }
     });
   }
@@ -40,9 +41,5 @@ export class HomePage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 500);
-  }
-
-  navigateToPokemonDetail(id: number) {
-    this.navController.navigateForward('pokemon-detail', { state: {"id": id} });
   }
 }

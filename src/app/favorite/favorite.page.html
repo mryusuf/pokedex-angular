@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Favorite
+      Favorite Pokemons
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,42 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Favorite</ion-title>
+      <ion-title size="large">Favorite Pokemons</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Favorite page"></app-explore-container>
+  @if (isLoading) {
+    <div class="spinner-container">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  } 
+  @else {
+    <ion-grid>
+      <ion-row>
+        @for (localPokemon of localPokemons; track localPokemon.pokemon.pokedexIndex) {
+        <ion-col size="6" size-md="3" size-lg="2">
+          <ion-card [routerLink]="['/pokemon-detail']" [state]="{pokedexIndex: localPokemon.pokemon.pokedexIndex}">
+            <ion-card-header>
+              <ion-row>
+                <ion-col>
+                  <ion-card-subtitle>#{{ localPokemon.pokemon.pokedexIndex }} </ion-card-subtitle>
+                </ion-col>
+              </ion-row>
+            </ion-card-header>
+
+            <ion-card-content>
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{localPokemon.pokemon.pokedexIndex}}.png" alt="Pokemon {{localPokemon.pokemon.name}} sprite" />
+              <ion-card-title> {{ localPokemon.pokemon.name | titlecase }}</ion-card-title>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        }
+        @empty {
+          <div class="spinner-container">
+            <p>No items found</p>
+          </div>
+        }
+      </ion-row>
+    </ion-grid>
+  }
 </ion-content>

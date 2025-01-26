@@ -13,6 +13,13 @@
     </ion-toolbar>
   </ion-header>
   <div>
+
+  @if (isLoading) {
+    <div class="spinner-container">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  } 
+  @else {
     <ion-grid>
       <ion-row>
         @for (pokemon of pokemons; track pokemon.name; let pokedexIndex = $index) {
@@ -41,7 +48,6 @@
         </ion-infinite-scroll>
       </ion-row>
     </ion-grid>
-
-    
+  }
   </div>
 </ion-content>

@@ -1,15 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Pokémon: {{pokemon?.name | titlecase}}</ion-title>
-    <ion-title>#{{ pokedexIndex }}</ion-title>
+    <ion-title>{{pokemon?.name | titlecase}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Pokémon: {{pokemon?.name | titlecase}}</ion-title>
-      <ion-title>#{{ pokedexIndex }}</ion-title>
+      <ion-title size="large">{{pokemon?.name | titlecase}}</ion-title>
     </ion-toolbar>
   </ion-header>
   @if (isLoading) {
@@ -25,8 +23,10 @@
         <ion-card>
           <ion-card-content>
             <!-- Pokémon Sprite -->
-            <div class="main-content">
-              <div>
+            <ion-row class="main-content">
+              <ion-col>
+
+                <ion-card-title>#{{ pokedexIndex }}</ion-card-title>
                 <img width="200"
                   src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/{{ pokemon?.id }}.gif"
                   alt="Pokémon Sprite" />
@@ -36,9 +36,9 @@
                 </p>
 
                 <ion-card-subtitle>Base Experience: {{ pokemon?.base_experience }}</ion-card-subtitle>
-              </div>
+              </ion-col>
 
-              <div>
+              <ion-col>
 
                 <!-- Favorite -->
                 <ion-button fill="false" slot ="end">
@@ -52,28 +52,35 @@
 
                 <!-- Cries Section -->
                 @if (pokemon?.cries?.latest || pokemon?.cries?.legacy) {
-                  <ion-card-title>Cries</ion-card-title>
                   @if (pokemon?.cries?.latest) {
-                  <div class="cry">
-                    <strong>Latest Cry:</strong>
-                    <audio controls>
-                      <source [src]="pokemon?.cries?.latest" type="audio/ogg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
+                  <ion-row class="cry">
+                    <ion-col>
+                      <p>Latest Cry:</p>
+                    </ion-col>
+                    <ion-col>
+                      <audio controls>
+                        <source [src]="pokemon?.cries?.latest" type="audio/ogg" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </ion-col>
+                  </ion-row>
                   }
                   @if (pokemon?.cries?.legacy) {
-                  <div class="cry">
-                    <strong>Legacy Cry:</strong>
-                    <audio controls>
-                      <source [src]="pokemon?.cries?.legacy" type="audio/ogg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
+                  <ion-row class="cry">
+                    <ion-col>
+                      <p>Legacy Cry:</p>
+                    </ion-col>
+                    <ion-col>
+                      <audio controls>
+                        <source [src]="pokemon?.cries?.legacy" type="audio/ogg" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </ion-col>
+                  </ion-row>
                   }
                 }
-              </div>
-            </div>
+              </ion-col>
+            </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>

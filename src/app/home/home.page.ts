@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { APIService } from '../services/apiservice';
+import { APIService } from '../services/api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Pokemon } from '../models/pokemon';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,9 +13,8 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 export class HomePage implements OnInit {
   offset = 0;
   pokemons: Pokemon[] = [];
-  pokepokemons$!: Observable<Pokemon[]>;
-  //loadingSubject: BehaviorSubject<boolean> = BehaviorSubject<boolean>();
-  constructor(private service: APIService) {}
+
+  constructor(private service: APIService, private navController: NavController) {}
 
   ngOnInit() {
     this.loadData();
@@ -41,5 +40,9 @@ export class HomePage implements OnInit {
     setTimeout(() => {
       event.target.complete();
     }, 500);
+  }
+
+  navigateToPokemonDetail(id: number) {
+    this.navController.navigateForward('pokemon-detail', { state: {"id": id} });
   }
 }

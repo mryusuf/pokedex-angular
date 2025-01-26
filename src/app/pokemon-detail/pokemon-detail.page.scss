@@ -1,0 +1,21 @@
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.main-content {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 16px;
+}
+
+.cry {
+    display: flex; 
+    align-items: center; 
+    gap: 8px;
+    margin-bottom: 16px;
+}

@@ -1,0 +1,173 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Pokémon: {{pokemon?.name | titlecase}}</ion-title>
+    <ion-title>#{{ pokedexIndex }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pokémon: {{pokemon?.name | titlecase}}</ion-title>
+      <ion-title>#{{ pokedexIndex }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  @if (isLoading) {
+    <div class="spinner-container">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  } 
+  @else {
+  <ion-grid>
+    <ion-row>
+      <!-- Main Content: Pokémon Name, Sprite, Height, Weight, Base Experience -->
+      <ion-col size="12" size-lg="6">
+        <ion-card>
+          <ion-card-content>
+            <!-- Pokémon Sprite -->
+            <div class="main-content">
+              <div>
+                <img width="200"
+                  src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/{{ pokemon?.id }}.gif"
+                  alt="Pokémon Sprite" />
+                <p>
+                  <strong>Height:</strong> {{ pokemon?.height }} (decimeters)<br />
+                  <strong>Weight:</strong> {{ pokemon?.weight }} (hectograms)
+                </p>
+
+                <ion-card-subtitle>Base Experience: {{ pokemon?.base_experience }}</ion-card-subtitle>
+              </div>
+
+              <div>
+
+                <!-- Favorite -->
+                <ion-button fill="false" slot ="end">
+                  <ion-icon 
+                    aria-hidden="true" 
+                    [name]="isFavorite == true ? 'heart' : 'heart-outline'"
+                    color="danger"
+                  >
+                  </ion-icon>
+                </ion-button>
+
+                <!-- Cries Section -->
+                @if (pokemon?.cries?.latest || pokemon?.cries?.legacy) {
+                  <ion-card-title>Cries</ion-card-title>
+                  @if (pokemon?.cries?.latest) {
+                  <div class="cry">
+                    <strong>Latest Cry:</strong>
+                    <audio controls>
+                      <source [src]="pokemon?.cries?.latest" type="audio/ogg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                  }
+                  @if (pokemon?.cries?.legacy) {
+                  <div class="cry">
+                    <strong>Legacy Cry:</strong>
+                    <audio controls>
+                      <source [src]="pokemon?.cries?.legacy" type="audio/ogg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                  }
+                }
+              </div>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Sidebar Content: Pokémon Types and Abilities -->
+      <ion-col size="12" size-lg="6">
+        <!-- Pokémon Types -->
+        @if (pokemon?.types?.length) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Types</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            @for (type of pokemon?.types; track type?.type?.name) {
+            <ion-chip color="primary">
+              {{ type.type?.name }}
+            </ion-chip>
+            }
+          </ion-card-content>
+        </ion-card>
+        }
+
+        <!-- Pokémon Abilities -->
+        @if (pokemon?.abilities?.length) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Abilities</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list>
+              @for (ability of pokemon?.abilities; track ability?.ability?.name) {
+              <ion-item>
+                <ion-label>
+                  {{ ability.ability?.name }}
+                  @if (ability.is_hidden) {
+                  (Hidden)
+                  }
+                </ion-label>
+              </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        }
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <!-- Pokémon Stats -->
+        @if (pokemon?.stats?.length) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Stats</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list>
+              @for (stat of pokemon?.stats; track stat?.stat?.name) {
+              <ion-item>
+                <ion-label>{{ stat.stat?.name | titlecase }}</ion-label>
+                <ion-badge slot="end" color="success">{{ stat.base_stat }}</ion-badge>
+              </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        }
+
+        <!-- Pokémon Moves -->
+        @if (pokemon?.moves?.length) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Moves</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list>
+              @for (move of pokemon?.moves; track move?.move?.name) {
+              <ion-item>
+                <ion-label>{{ move.move?.name }}</ion-label>
+                <ion-note slot="end">
+                  Level {{ move.version_group_details?.[0]?.level_learned_at || '0' }}
+                </ion-note>
+              </ion-item>
+              }
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+        }
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  }
+</ion-content>

@@ -17,7 +17,7 @@
       <ion-row>
         @for (pokemon of pokemons; track pokemon.name; let pokedexIndex = $index) {
         <ion-col size="6" size-md="3" size-lg="2">
-          <ion-card>
+          <ion-card [routerLink]="['/pokemon-detail']" [state]="{pokedexIndex: pokedexIndex + 1}">
             <ion-card-header>
               <ion-row>
                 <ion-col>
@@ -28,7 +28,7 @@
 
             <ion-card-content>
               <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{pokedexIndex+1}}.png" alt="Pokemon {{pokemon.name}} sprite" />
-              <ion-card-title> {{ pokemon.name }}</ion-card-title>
+              <ion-card-title> {{ pokemon.name | titlecase }}</ion-card-title>
             </ion-card-content>
           </ion-card>
         </ion-col>

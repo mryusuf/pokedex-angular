@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subscription, BehaviorSubject } from "rxjs";
-import { Pokemon, PokemonListResponse } from "../models/pokemon";
+import { Pokemon, PokemonDetail, PokemonListResponse } from "../models/pokemon";
 
 @Injectable({providedIn: 'root'})
 export class APIService {
@@ -13,7 +13,7 @@ export class APIService {
         return this.http.get<PokemonListResponse>(`${this.baseURL}/pokemon?limit=${limit}&offset=${offset}`);
     }
 
-    getPokemonDetails(id: number): Observable<Pokemon> {
+    getPokemonDetails(id: number): Observable<PokemonDetail> {
         return this.http.get<Pokemon>(`${this.baseURL}/pokemon/${id}`);
     }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { Drivers } from '@ionic/storage';
@@ -11,6 +11,7 @@ import { APIService } from './services/api.service';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { StorageService } from './services/storage.service';
 import * as cordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,12 @@ import * as cordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
     AppRoutingModule,
     IonicStorageModule.forRoot({
       driverOrder: [cordovaSQLiteDriver._driver, Drivers.IndexedDB]
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     })
   ],
   providers: [

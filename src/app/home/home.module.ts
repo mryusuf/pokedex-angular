@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { FilterTypeComponent } from '../filter-type/filter-type.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,8 @@ import { HomePageRoutingModule } from './home-routing.module';
     FormsModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [
+    HomePage, 
+    FilterTypeComponent]
 })
 export class HomePageModule {}

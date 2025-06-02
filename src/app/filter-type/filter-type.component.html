@@ -1,0 +1,22 @@
+<ion-grid>
+  
+  <ion-row>
+     @for (type of types; track type) {
+      <ion-col size="6">
+        <ion-card (click)="selectType(type)" [class.selected]="selectedType === type">
+          <ion-img 
+            [src]="'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/brilliant-diamond-and-shining-pearl/' + type + '.png'"
+            alt="Pokemon Type {{ type }}"
+          ></ion-img>
+        </ion-card>
+      </ion-col>
+    }
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="block" (click)="applyFilter()" [disabled]="selectedType === null">
+        Apply Filter
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

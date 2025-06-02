@@ -4,7 +4,13 @@ export interface PokemonListResponse {
 }
 export interface Pokemon {
     name: string;
-    url: string
+    url: string;
+}
+export interface PokemonListByTypeResponse {
+    pokemon: PokemonByType[];
+}
+export interface PokemonByType {
+    pokemon: Pokemon;
 }
 export interface PokemonDetail {
     abilities?:                Ability[];

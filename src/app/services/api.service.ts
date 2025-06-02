@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable, Subscription, BehaviorSubject } from "rxjs";
-import { Pokemon, PokemonDetail, PokemonListResponse } from "../models/pokemon";
+import { Observable } from "rxjs";
+import { Pokemon, PokemonDetail, PokemonListByTypeResponse, PokemonListResponse } from "../models/pokemon";
 
 @Injectable({providedIn: 'root'})
 export class APIService {
@@ -15,5 +15,9 @@ export class APIService {
 
     getPokemonDetails(id: number): Observable<PokemonDetail> {
         return this.http.get<Pokemon>(`${this.baseURL}/pokemon/${id}`);
+    }
+
+    getPokemonListByType(type: number): Observable<PokemonListByTypeResponse> {
+        return this.http.get<PokemonListByTypeResponse>(`${this.baseURL}/type/${type}`);
     }
 }
